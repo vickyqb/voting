@@ -1,3 +1,10 @@
+type Candidate = record { votes : nat32; name : text };
+type Voter = record { voted : bool; name : text };
 service : {
-    "greet": (text) -> (text) query;
+  create_candidate : (text) -> ();
+  create_voter : (text) -> ();
+  get_candidates : () -> (vec Candidate) query;
+  get_voters : () -> (vec Voter) query;
+  get_winner : () -> (opt Candidate) query;
+  vote_to_candidate : (text, text) -> (text);
 }

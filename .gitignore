@@ -15,6 +15,7 @@
 
 # rust
 target/
+did.sh
 
 # frontend code
 node_modules/
