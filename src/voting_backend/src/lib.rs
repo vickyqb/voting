@@ -72,23 +72,6 @@ thread_local! {
     );
 }
 
-#[update]
-fn create_initial_candidates() -> String {
-    let mut result = "".to_string();
-    CANDIDATES.with(|candidates| {
-        let mut candidates = candidates.borrow_mut();
-        if candidates.is_empty() {
-            candidates.insert("Alice".to_string(), Candidate {
-                name: "Alice".to_string(),
-                votes: 0,
-            });
-            result = "created".to_string();
-        }else{
-            result = "already exists ".to_string();
-        }
-    });
-    result
-}
 
 #[update]
 fn create_candidate(name: String) -> String {
@@ -204,10 +187,4 @@ fn vote_to_candidate(voter_name: String, to: String) -> String {
     });
     result
 }
-
-#[query]
-fn greet(name: String) -> String {
-    format!("Hello, {}!", name)
-}
-
 export_candid!();
