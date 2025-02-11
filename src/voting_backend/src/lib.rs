@@ -95,11 +95,10 @@ fn create_candidate(name: String) -> String {
 }
 
 #[update]
-fn create_voter(name: String) -> String {
+fn create_voter(name: String) -> Result<String, String> {
     if name.is_empty() {
-        return "Name cannot be empty".to_string();
-    }
-    let mut result = "creating".to_string();
+        return Err("Name cannot be empty".to_string());
+    };
     VOTERS.with(|voters| {
         let mut voters = voters.borrow_mut();
         if !voters.contains_key(&name) {
@@ -107,12 +106,12 @@ fn create_voter(name: String) -> String {
                 name: name.clone(),
                 voted: false,
             });
-            result = "created".to_string();
+            return Ok("created".to_string());
         }else{
-            result = "already exists".to_string();
+            return Err("already exists".to_string());
         }
     });
-    result
+    return Ok("created".to_string());
 }
 
 #[query]
